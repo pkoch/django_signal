@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name          = 'django_signal'
-  s.version       = '1.0.2'
+  s.version       = '1.1.0'
   s.authors       = ['Paulo Köch']
   s.email         = ['paulo.koch@gmail.com']
   s.homepage      = 'https://github.com/pkoch/django_signal'
