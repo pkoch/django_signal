@@ -13,6 +13,7 @@ require 'weakref'
 # * No providing_args, since they had no functional relevance.
 #
 class DjangoSignal
+  class InvalidReceiver < StandardError; end
   #
   # Create a new signal.
   #
@@ -24,7 +25,8 @@ class DjangoSignal
   #
   # Connect receiver to sender for signal.
   # 
-  # +receiver+:: A callable which is to receive signals.
+  # +receiver+:: A callable which is to receive signals. The receiver must
+  #              be able to handler 2+ arguments (+signal, sender, *send_args+).
   #             If dispatch_uid is given, the receiver will not be added if
   #             another receiver already exists with that dispatch_uid.
   # +sender+:: The sender to which the receiver should respond or nil to
@@ -35,6 +37,16 @@ class DjangoSignal
   #
   def connect(receiver, sender=nil, dispatch_uid=nil)
     lookup_key = make_key(receiver, sender, dispatch_uid)
+
+    begin
+      receiver.method(:call) rescue nil or raise NoMethodError
+      if -1 < receiver.arity && receiver.arity < 2
+        raise InvalidReceiver, 'Receiver must be able to handle 2+ arguments.'
+      end
+    rescue NoMethodError
+      raise InvalidReceiver, 'Receiver must be a callable (and respond to arity method).'
+    end
+
 
     @lock.synchronize {
       @receivers[lookup_key] ||= receiver
@@ -100,15 +112,8 @@ class DjangoSignal
   end
 
   def simple_call(receiver, sender, *args)
-    opts = {}
-    if args.last.is_a?(Hash)
-      opts = args.pop
-    end
-    opts.merge!(
-      :signal => self,
-      :sender => sender
-    )
-    args.push(opts)
+    args.unshift(sender)
+    args.unshift(self)
 
     receiver.call(*args)
   end
