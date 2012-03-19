@@ -1,6 +1,6 @@
-# Django Signals
+# Django Signal
 
-Because I really wanted something similar to Django Signals in Ruby.
+Because I really wanted something similar to Django's Signal in Ruby.
 
 The Observable module was almost, but not entirely, not over engineered.
 
