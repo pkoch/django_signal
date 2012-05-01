@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Django signal by pkoch</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Django signal</h1>
+        <p>A port of Django's Signal to ruby.</p>
+        <p class="view"><a href="https://github.com/pkoch/django_signal">View the Project on GitHub <small>pkoch/django_signal</small></a></p>
+        <ul>
+          <li><a href="https://github.com/pkoch/django_signal/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/pkoch/django_signal/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/pkoch/django_signal">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Django Signal</h1>
+
+<p>Because I really wanted something similar to Django's Signal in Ruby.</p>
+
+<p>The Observable module was almost, but not entirely, not over engineered.</p>
+
+<ul>
+<li>It made me have an object as the observer, not just a generic callable.</li>
+<li>It's not a self standing class. It has to be included by someone.</li>
+<li>Solution is not obvious if an object has various observable concerns.</li>
+<li>
+<code>add_observer</code> had everything to cause me reload problems.</li>
+</ul><h2>But, will this work as I expect?</h2>
+
+<p>First of all, I obviously didn't wire this signals to ActiveRecord.</p>
+
+<p>Also, I took the liberty to make some adaptations. Namely:</p>
+
+<ul>
+<li>No explicit weakref stuff. Want a weakref? Build if yourself.
+Invalid refs are handled gracefuly. Check the tests.</li>
+<li>No providing_args, since they had no functional relevance.</li>
+</ul><h2>Installation</h2>
+
+<p>Just add it to your projects' <code>Gemfile</code>:</p>
+
+<div class="highlight">
+<pre><span class="n">gem</span> <span class="s2">"django_signal"</span>
+</pre>
+</div>
+
+
+<h2>Usage</h2>
+
+<p><a href="https://docs.djangoproject.com/en/dev/topics/signals/#defining-and-sending-signals">https://docs.djangoproject.com/en/dev/topics/signals/#defining-and-sending-signals</a></p>
+
+<h2>Credits</h2>
+
+<ul>
+<li><a href="https://code.djangoproject.com/svn/django/trunk/django/dispatch/dispatcher.py">https://code.djangoproject.com/svn/django/trunk/django/dispatch/dispatcher.py</a></li>
+<li>Gonçalo Silva (<a href="https://github.com/goncalossilva" class="user-mention">@goncalossilva</a>) for teaching me how to cut gems.</li>
+</ul><hr><p>Copyright © 2012 Paulo Köch, released under the MIT license</p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/pkoch">pkoch</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+    
+  </body>
+</html>
